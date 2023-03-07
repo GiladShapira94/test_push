@@ -1,0 +1,64 @@
+kind: serving
+metadata:
+  name: serving
+  hash: f0e8a2e5c09ca2067de4087852152be9968af9a7
+  project: new-git-project
+  categories: []
+  credentials:
+    access_key: $ref:mlrun-auth-secrets.4680152b754fc867bcecbe695f2eb7939daf3c73b921400367d85f24
+spec:
+  command: http://new-git-project-serving-new-git-project.default-tenant.app.cust-cs-il-3-5-2.iguazio-cd2.com/
+  args: []
+  image: python:3.8
+  build:
+    commands:
+    - python -m pip install mlrun[complete] scikit-learn==1.0.2
+  description: ''
+  disable_auto_mount: false
+  env:
+  - name: V3IO_API
+    value: ''
+  - name: V3IO_USERNAME
+    value: ''
+  - name: V3IO_FRAMESD
+    value: ''
+  - name: V3IO_ACCESS_KEY
+    valueFrom:
+      secretKeyRef:
+        key: accessKey
+        name: mlrun-auth-secrets.4680152b754fc867bcecbe695f2eb7939daf3c73b921400367d85f24
+    value: ''
+  - name: MLRUN_AUTH_SESSION
+    valueFrom:
+      secretKeyRef:
+        key: accessKey
+        name: mlrun-auth-secrets.4680152b754fc867bcecbe695f2eb7939daf3c73b921400367d85f24
+  resources:
+    requests:
+      memory: 1Mi
+      cpu: 25m
+    limits:
+      memory: 20Gi
+      cpu: '2'
+  priority_class_name: igz-workload-medium
+  preemption_mode: prevent
+  min_replicas: 1
+  max_replicas: 4
+  source: ''
+  function_kind: serving_v2
+  base_image_pull: false
+  graph:
+    kind: router
+    after: []
+    routes:
+      iris_model:
+        kind: task
+        class_name: mlrun.frameworks.sklearn.SklearnModelServer
+        class_args:
+          model_path: store://artifacts/new-git-project/iris_model:7f9aef603b1641348a57e3520c53f69d
+        after: []
+  secret_sources: []
+  affinity: null
+  tolerations: null
+  security_context: {}
+verbose: false

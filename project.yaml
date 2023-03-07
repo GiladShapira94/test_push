@@ -1,0 +1,24 @@
+kind: project
+metadata:
+  name: new-git-project
+spec:
+  functions:
+  - url: fetch_data.py
+    name: fetch_data
+    kind: job
+    image: mlrun/mlrun
+    handler: fetch_data
+  workflows: []
+  artifacts:
+  - kind: dataset
+    metadata:
+      project: new-git-project
+      key: data
+    spec:
+      target_path: https://s3.wasabisys.com/iguazio/data/iris/iris.data.raw.csv
+      format: ''
+    status:
+      state: created
+  source: git://github.com/GiladShapira94/test_push.git#refs/heads/master
+  origin_url: git://github.com/GiladShapira94/test_push.git#master
+  desired_state: online

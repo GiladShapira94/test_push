@@ -1,11 +1,11 @@
 kind: serving
 metadata:
   name: serving
-  hash: ed55ef30ff05e673f61c2c3b8c33411447668d12
+  hash: ab59c9754e3df4e620884f21d7e5179931dbd93f
   project: new-git-project
   categories: []
 spec:
-  command: http://192.168.224.227:32499
+  command: http://192.168.224.227:31108
   args: []
   image: python:3.8
   build:
@@ -33,7 +33,7 @@ spec:
         kind: task
         class_name: mlrun.frameworks.sklearn.SklearnModelServer
         class_args:
-          model_path: store://artifacts/new-git-project/iris_model:16570fb0c4004fb091ae91c9ac94a4ad
+          model_path: store://artifacts/new-git-project/iris_model:d4453e8c108741c79342ff807c803abc
         after: []
   secret_sources: []
   affinity: null

@@ -23,6 +23,7 @@ spec:
   - kind: dataset
     metadata:
       project: new-git-project
+      tag: v1
       key: data
     spec:
       target_path: https://s3.wasabisys.com/iguazio/data/iris/iris.data.raw.csv
@@ -39,5 +40,5 @@ spec:
     status:
       state: created
   source: git://github.com/GiladShapira94/test_push.git#refs/heads/master
-  origin_url: git://github.com/GiladShapira94/test_push.git#master
+  origin_url: git://github.com/GiladShapira94/test_push.git#refs/heads/master
   desired_state: online

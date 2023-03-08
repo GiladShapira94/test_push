@@ -23,7 +23,6 @@ spec:
   - kind: dataset
     metadata:
       project: new-git-project
-      tag: v1
       key: data
     spec:
       target_path: https://s3.wasabisys.com/iguazio/data/iris/iris.data.raw.csv

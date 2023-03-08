@@ -1,13 +1,11 @@
 kind: serving
 metadata:
   name: serving
-  hash: caadf534980781150586e95dc6f70cfc780ff0f2
+  hash: dd65c8fe42c1703a284ea615963e899d9f6cf372
   project: new-git-project
   categories: []
-  credentials:
-    access_key: $ref:mlrun-auth-secrets.4680152b754fc867bcecbe695f2eb7939daf3c73b921400367d85f24
 spec:
-  command: http://new-git-project-serving-new-git-project.default-tenant.app.cust-cs-il-3-5-2.iguazio-cd2.com/
+  command: http://192.168.224.227:31410
   args: []
   image: python:3.8
   build:
@@ -16,37 +14,17 @@ spec:
   description: ''
   disable_auto_mount: false
   env:
-  - name: V3IO_API
-    value: ''
-  - name: V3IO_USERNAME
-    value: ''
-  - name: V3IO_FRAMESD
-    value: ''
-  - name: V3IO_ACCESS_KEY
-    valueFrom:
-      secretKeyRef:
-        key: accessKey
-        name: mlrun-auth-secrets.4680152b754fc867bcecbe695f2eb7939daf3c73b921400367d85f24
-    value: ''
-  - name: MLRUN_AUTH_SESSION
-    valueFrom:
-      secretKeyRef:
-        key: accessKey
-        name: mlrun-auth-secrets.4680152b754fc867bcecbe695f2eb7939daf3c73b921400367d85f24
-  resources:
-    requests:
-      memory: 1Mi
-      cpu: 25m
-    limits:
-      memory: 20Gi
-      cpu: '2'
-  priority_class_name: igz-workload-medium
+  - name: S3_ENDPOINT_URL
+    value: http://minio.mlrun.svc.cluster.local:9000
+  - name: AWS_ACCESS_KEY_ID
+    value: minio
+  - name: AWS_SECRET_ACCESS_KEY
+    value: minio123
   preemption_mode: prevent
   min_replicas: 1
   max_replicas: 4
   source: ''
   function_kind: serving_v2
-  base_image_pull: false
   graph:
     kind: router
     after: []
@@ -55,7 +33,7 @@ spec:
         kind: task
         class_name: mlrun.frameworks.sklearn.SklearnModelServer
         class_args:
-          model_path: store://artifacts/new-git-project/iris_model:5ff8b5d4507545d1b61a5f2ea7d18319
+          model_path: store://artifacts/new-git-project/iris_model:598a24bb27194a41986d46a0276f4268
         after: []
   secret_sources: []
   affinity: null
